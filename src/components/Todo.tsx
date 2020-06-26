@@ -31,6 +31,7 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 			>
 				{todo.title}
 			</div>
+			<div>{todo.description}</div>
 			<button hidden={!isEditable} onClick={updateTodo}>
 				Update
 			</button>

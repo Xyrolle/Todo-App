@@ -4,7 +4,7 @@ import axios from 'axios';
 import ITodo from '../interfaces/ITodo';
 
 const AddCategory: React.FC = () => {
-	const [ categoryName, updateCategoryName ] = useState<ITodo>('');
+	const [ categoryName, updateCategoryName ] = useState('');
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -25,7 +25,7 @@ const AddCategory: React.FC = () => {
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
-				<input type='text' value={categoryName} onChange={handleChange} />
+				<input className='add-category' type='text' value={categoryName} onChange={handleChange} />
 			</form>
 		</div>
 	);

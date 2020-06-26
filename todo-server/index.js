@@ -16,7 +16,7 @@ let db = new sqlite3.Database('./todo.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN
 });
 
 app.get('/', (req, res) => {
-	return res.send('base /');
+	return res.send('base/');
 });
 
 // add todo
@@ -43,8 +43,18 @@ app.get('/update/todo/:id', (req, res) => {
 	const id = req.params.id;
 });
 
+// todos for category
+app.get('/todos/:category', (req, res) => {
+	const category = req.params.category;
+	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE category='${category}'`;
+	db.all(SELECT_ALL_TODOS, (err, rows) => {
+		if (err) console.error(err);
+		res.send(rows);
+	});
+});
+
 // all todos
-app.get('/todos', (req, res) => {
+app.get('/todos/', (req, res) => {
 	const SELECT_ALL_TODOS = 'SELECT * FROM Todos';
 	db.all(SELECT_ALL_TODOS, (err, rows) => {
 		if (err) console.error(err);
@@ -52,7 +62,7 @@ app.get('/todos', (req, res) => {
 	});
 });
 
-app.get('/add/category', (req, res) => {
+app.get('/add/category/', (req, res) => {
 	const { name } = req.query;
 	const ADD_CATEGORY = `INSERT INTO Categories (name) VALUES('${name}')`;
 	db.all(ADD_CATEGORY, (err, rows) => {

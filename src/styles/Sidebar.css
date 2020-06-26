@@ -10,6 +10,7 @@
 	overflow-x: hidden;
 	padding-top: 20px;
 	border: 1px solid black;
+	overflow: scroll;
 }
 
 .sidebar a {
@@ -20,12 +21,13 @@
 	display: block;
 }
 
-.sidebar a:hover {
-	color: #f1f1f1;
+.add-category {
+	margin-bottom: 20%;
+	margin-top: 680px;
 }
 
 .main {
-	margin-left: 160px; /* Same as the width of the sidebar */
-	font-size: 28px; /* Increased text to enable scrolling */
+	margin-left: 160px;
+	font-size: 28px;
 	padding: 0px 10px;
 }

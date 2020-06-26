@@ -9,9 +9,10 @@ const Categories: React.FC = () => {
 	const [ categories, updateCategories ] = useState<ICategory[]>([]);
 
 	useEffect(() => {
-		axios.get('http://localhost:4000/categories').then((res) => {
-			updateCategories(res.data);
-		});
+		axios
+			.get('http://localhost:4000/categories')
+			.then((res) => updateCategories(res.data))
+			.catch((err) => console.error(err));
 	}, []);
 
 	return (

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import ITodo from '../interfaces/ITodo';
 
-const initialState = { title: '', description: '', priority: '' };
+const initialState: ITodo = { title: '', description: '', priority: 1 };
 
 const AddTodoForm: React.FC = () => {
 	const [ todo, updateTodo ] = useState<ITodo>(initialState);
