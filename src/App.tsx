@@ -1,18 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Todos from './components/Todos';
-import AddTodoForm from './components/AddTodoForm';
+
+import Categories from './components/Categories';
+import AddCategory from './components/AddCategory';
+
+import Modal from './components/Modal';
+import Sidebar from './components/Sidebar';
+
+import './App.css';
 
 const App: React.FC = () => {
 	return (
-		<div>
-			<Router>
-				<Switch>
-					<Route exact path='/' component={Todos} />
-					<Route exact path='/add' component={AddTodoForm} />
-				</Switch>
-			</Router>
+		<div className='App'>
+			<Sidebar />
+			<Todos />
+			<Modal />
 		</div>
 	);
 };

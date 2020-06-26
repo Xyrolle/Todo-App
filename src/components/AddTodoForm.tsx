@@ -3,8 +3,10 @@ import axios from 'axios';
 
 import ITodo from '../interfaces/ITodo';
 
+const initialState = { title: '', description: '', priority: '' };
+
 const AddTodoForm: React.FC = () => {
-	const [ todo, updateTodo ] = useState<ITodo>({ title: '', description: '', priority: '' });
+	const [ todo, updateTodo ] = useState<ITodo>(initialState);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -14,8 +16,9 @@ const AddTodoForm: React.FC = () => {
 
 	const addTodo = () => {
 		const { title, description, priority } = todo;
+		updateTodo(initialState);
 		axios
-			.get(`http://localhost:4000/addTodo?title=${title}&description=${description}&priority=${priority}`)
+			.get(`http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}`)
 			.catch((err) => console.error(err));
 	};
 
@@ -31,13 +34,14 @@ const AddTodoForm: React.FC = () => {
 				<input type='text' name='title' value={todo.title} onChange={handleChange} />
 				<label>description:</label>
 				<input type='text' name='description' value={todo.description} onChange={handleChange} />
-				<label>priority:</label>
-				<label>1</label>
-				<input type='radio' name='priority' value='1' onChange={handleChange} />
-				<label>2</label>
-				<input type='radio' name='priority' value='2' onChange={handleChange} />
-				<label>3</label>
-				<input type='radio' name='priority' value='3' onChange={handleChange} />
+				<div className='select'>
+					<label>priority:</label>
+					<select>
+						<option value='1'>Low</option>
+						<option value='2'>Average</option>
+						<option value='3'>High</option>
+					</select>
+				</div>
 				<input type='submit' value='Submit' />
 			</form>
 		</div>

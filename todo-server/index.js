@@ -11,41 +11,59 @@ app.use(cors());
 // SELECT ALL Todos WHERE foreign_key=category_id
 
 let db = new sqlite3.Database('./todo.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-	if (err) {
-		console.error(err.message);
-	} else {
-		console.log('connected to database');
-	}
+	if (err) console.error(err.message);
+	else console.log('connected to database');
 });
 
 app.get('/', (req, res) => {
 	return res.send('base /');
 });
 
-app.get('/addTodo', (req, res) => {
+// add todo
+app.get('/add/todo', (req, res) => {
 	const { title, description } = req.query;
 	const date = new Date();
-	const INSERT_INTO_DECK_INFO = `INSERT INTO Todos (title, description, createdAt, updatedAt) VALUES('${title}', '${description}', '${date}', '${date}')`;
-	const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS Todos (id INTEGER PRIMARY KEY, title text, description text,createdAt date, updatedAt date, priority INTEGER DEFAULT 1, complete BOOL DEFAULT 0)`;
-	db.run(CREATE_TABLE, (err) => {
-		if (err) console.error('cannot create a todo');
-	});
-	db.all(INSERT_INTO_DECK_INFO, (err, rows) => {
+	const ADD_TODO = `INSERT INTO Todos (title, description, createdAt, updatedAt) VALUES('${title}', '${description}', '${date}', '${date}')`;
+	db.all(ADD_TODO, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);
 	});
 });
 
-app.get('/removeTodo/:id', (req, res) => {
+// delete todo
+app.get('/delete/todo/:id', (req, res) => {
 	const id = req.params.id;
-	db.run(`DELETE FROM Todos WHERE id=?`, id, (err) => {
-		if (err) console.error('error while deleting');
+	const DELETE_TODO = `DELETE FROM Todos WHERE id=?`;
+	db.run(DELETE_TODO, id, (err) => {
+		if (err) console.error('error while deleting', err);
 	});
 });
 
+app.get('/update/todo/:id', (req, res) => {
+	const id = req.params.id;
+});
+
+// all todos
 app.get('/todos', (req, res) => {
-	db.all('SELECT * FROM Todos', (err, rows) => {
-		if (err) console.error('error while showing all todos');
+	const SELECT_ALL_TODOS = 'SELECT * FROM Todos';
+	db.all(SELECT_ALL_TODOS, (err, rows) => {
+		if (err) console.error(err);
+		res.send(rows);
+	});
+});
+
+app.get('/add/category', (req, res) => {
+	const { name } = req.query;
+	const ADD_CATEGORY = `INSERT INTO Categories (name) VALUES('${name}')`;
+	db.all(ADD_CATEGORY, (err, rows) => {
+		if (err) console.error('error while addding category', err);
+	});
+});
+
+app.get('/categories', (req, res) => {
+	const SELECT_ALL_CATEGORIES = 'SELECT * FROM Categories';
+	db.all(SELECT_ALL_CATEGORIES, (err, rows) => {
+		if (err) console.error(err);
 		res.send(rows);
 	});
 });
