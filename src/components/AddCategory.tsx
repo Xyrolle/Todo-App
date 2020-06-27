@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import ITodo from '../interfaces/ITodo';
-
 const AddCategory: React.FC = () => {
 	const [ categoryName, updateCategoryName ] = useState('');
 

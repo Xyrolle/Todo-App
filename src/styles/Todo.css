@@ -1,6 +1,67 @@
 .todo {
-	border: 1px solid red;
-	width: 300px;
-	height: 260px;
+	display: grid;
+	width: 340px;
+	min-height: 300px;
+	max-height: 340px;
+	border-radius: 3%;
+	color: #f9f6f7;
 	margin: 1rem;
+	font-size: 1.2rem;
+	-webkit-box-shadow: -4px 7px 13px 0px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow: -4px 7px 13px 0px rgba(50, 50, 50, 0.75);
+	box-shadow: -4px 7px 13px 0px rgba(50, 50, 50, 0.75);
+	transition: all .2s ease-in-out;
+	overflow: scroll;
+}
+
+.todo:hover {
+	transform: scale(1.02);
+}
+
+.todo-title {
+	padding-top: 5%;
+	font-size: 2rem;
+	font-weight: 600;
+	width: 100%;
+}
+
+.delete-todo {
+	position: absolute;
+	border-radius: 50%;
+	padding: 2px 6px 3px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	position: absolute;
+	margin: 10px 0px 0 14px;
+	border-radius: 50%;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.delete-todo:hover {
+	background-color: #f44336;
+}
+
+.todo-description {
+	padding: 5%;
+	font-weight: 500;
+}
+
+.todo-date {
+	padding-bottom: 8px;
+}
+
+.high-priority {
+	background-color: #f44336;
+	opacity: 0.9;
+}
+
+.medium-priority {
+	background-color: #ff9800;
+	opacity: 0.9;
+}
+
+.low-priority {
+	background-color: #8bc34a;
 }

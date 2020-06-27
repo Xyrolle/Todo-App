@@ -21,9 +21,9 @@ app.get('/', (req, res) => {
 
 // add todo
 app.get('/add/todo', (req, res) => {
-	const { title, description } = req.query;
+	const { title, description, priority, category } = req.query;
 	const date = new Date();
-	const ADD_TODO = `INSERT INTO Todos (title, description, createdAt, updatedAt) VALUES('${title}', '${description}', '${date}', '${date}')`;
+	const ADD_TODO = `INSERT INTO Todos (title, description, createdAt, updatedAt, priority, category) VALUES('${title}', '${description}', '${date}', '${date}', '${priority}', '${category}')`;
 	db.all(ADD_TODO, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);

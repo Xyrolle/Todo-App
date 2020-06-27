@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import { v4 as uuid_v4 } from 'uuid';
 import axios from 'axios';
 
 import Todo from './Todo';
@@ -19,7 +21,6 @@ const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 			const URL =
 				name ? `http://localhost:4000/todos/${name}` :
 				'http://localhost:4000/todos';
-			console.log(URL);
 			axios.get(URL).then((res) => updateTodos(res.data)).catch((err) => console.error(err));
 		},
 		[ name ]
@@ -38,6 +39,7 @@ const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 							createdAt={todo.createdAt}
 							updatedAt={todo.updatedAt}
 							complete={todo.complete}
+							key={uuid_v4()}
 						/>
 					);
 				})}

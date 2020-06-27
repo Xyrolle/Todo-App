@@ -3,7 +3,7 @@ export default interface ITodo {
 	description?: string;
 	readonly createdAt?: Date;
 	updatedAt?: Date;
-	priority: number;
+	priority: string;
 	readonly id?: number;
 	complete?: boolean;
 };

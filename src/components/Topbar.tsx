@@ -7,7 +7,6 @@ type CategoryProps = {
 };
 
 const Topbar: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
-	console.log(name, 'is');
 	return (
 		<div className='topbar'>
 			<h1>

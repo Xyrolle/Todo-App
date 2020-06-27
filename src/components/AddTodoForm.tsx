@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router';
 import axios from 'axios';
 
 import ITodo from '../interfaces/ITodo';
 
-const initialState: ITodo = { title: '', description: '', priority: 1 };
+import '../styles/AddTodoForm.css';
 
-const AddTodoForm: React.FC = () => {
+const initialState: ITodo = { title: '', description: '', priority: '1' };
+
+const AddTodoForm: React.FC<any> = (props: any) => {
 	const [ todo, updateTodo ] = useState<ITodo>(initialState);
+
+	let pathName = props.location.pathname;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		addTodo();
-		alert('submited');
 	};
 
 	const addTodo = () => {
+		let category = pathName.substring(1);
 		const { title, description, priority } = todo;
 		updateTodo(initialState);
 		axios
-			.get(`http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}`)
+			.get(
+				`http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}&category=${category}`
+			)
 			.catch((err) => console.error(err));
 	};
 
@@ -28,24 +35,24 @@ const AddTodoForm: React.FC = () => {
 	};
 
 	return (
-		<div>
+		<div style={{ display: 'flex' }}>
 			<form onSubmit={handleSubmit}>
 				<label>title:</label>
 				<input type='text' name='title' value={todo.title} onChange={handleChange} />
 				<label>description:</label>
 				<input type='text' name='description' value={todo.description} onChange={handleChange} />
-				<div className='select'>
+				<div className='select-css'>
 					<label>priority:</label>
-					<select>
+					<select name='priority' onChange={handleChange}>
 						<option value='1'>Low</option>
-						<option value='2'>Average</option>
+						<option value='2'>Medium</option>
 						<option value='3'>High</option>
 					</select>
 				</div>
-				<input type='submit' value='Submit' />
+				<input type='submit' className='button' value='Submit' />
 			</form>
 		</div>
 	);
 };
 
-export default AddTodoForm;
+export default withRouter(AddTodoForm);

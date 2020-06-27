@@ -9,7 +9,7 @@ const Category: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 	return (
 		<div>
 			<Link to={`/${name}`}>
-				<h2>name</h2>
+				<h2>{name}</h2>
 			</Link>
 		</div>
 	);
