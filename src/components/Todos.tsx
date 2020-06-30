@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuid_v4 } from 'uuid';
 import axios from 'axios';
 
 import Todo from './Todo';
 
-import ITodo from '../interfaces/ITodo';
+import { ITodo } from '../interfaces/ITodo';
+import { TodosContext } from '../context/TodosContext';
 
 import '../styles/Todos.css';
 
@@ -15,6 +15,8 @@ type CategoryProps = {
 
 const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 	const [ todos, updateTodos ] = useState<ITodo[]>([]);
+	const { rerenderTodos } = useContext(TodosContext);
+	const [ shouldRenderTodos ] = rerenderTodos;
 
 	useEffect(
 		() => {
@@ -23,14 +25,11 @@ const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 				'http://localhost:4000/todos';
 			axios.get(URL).then((res) => updateTodos(res.data)).catch((err) => console.error(err));
 		},
-		[ name ]
+		[ name, shouldRenderTodos ]
 	);
-
-	// const filteredTodos = todos.filter((todo) => todo.title.some() === 'hello')
 
 	return (
 		<div className='todos'>
-			{console.log(todos)}
 			{todos.length &&
 				todos.map((todo: ITodo) => {
 					return (

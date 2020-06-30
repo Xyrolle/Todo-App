@@ -52,8 +52,8 @@ app.get('/todos/:category', (req, res) => {
 // all todos
 app.get('/todos/', (req, res) => {
 	// ?sort[priority]=asc&filter[priority]=1,2,3
-	const {  }
-	const SELECT_ALL_TODOS = 'SELECT * FROM Todos WHERE priority=1 ORDER BY priority';
+	const { like } = req.query;
+	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE title LIKE 'hoo%'`;
 	db.all(SELECT_ALL_TODOS, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import ITodo from '../interfaces/ITodo';
+import { ITodo } from '../interfaces/ITodo';
 
 import '../styles/Todo.css';
 

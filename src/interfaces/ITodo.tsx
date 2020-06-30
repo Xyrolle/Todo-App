@@ -1,15 +1,15 @@
-export default interface ITodo {
+export interface ITodo {
 	title: string;
 	description?: string;
 	readonly createdAt?: Date;
 	updatedAt?: Date;
-	priority:
+	priority: Priority;
 	readonly id?: number;
 	complete?: boolean;
-};
+}
 
 export enum Priority {
-	LOW = 'low',
-	MEDIUM = ,
+	LOW = 1,
+	MEDIUM,
 	HIGH
-};
+}

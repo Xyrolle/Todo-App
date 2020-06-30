@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+
+import { TodosContext } from '../context/TodosContext';
 
 import '../styles/Topbar.css';
 
@@ -7,6 +9,8 @@ type CategoryProps = {
 };
 
 const Topbar: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
+	const { filter } = useContext(TodosContext);
+	const [ filterString, updateFilterString ] = filter;
 	return (
 		// connect to context and pass to it string from this input
 		// then read this string in todos and show only those todos

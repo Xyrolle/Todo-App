@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
+import { TodosContext } from '../context/TodosContext';
 
-import ITodo from '../interfaces/ITodo';
+import { ITodo, Priority } from '../interfaces/ITodo';
 
 import '../styles/AddTodoForm.css';
 
-const initialState: ITodo = { title: '', description: '', priority: '1' };
+const initialState: ITodo = { title: '', description: '', priority: Priority.LOW };
 
 const AddTodoForm: React.FC<any> = (props: any) => {
 	const [ todo, updateTodo ] = useState<ITodo>(initialState);
+	const { rerenderTodos } = useContext(TodosContext);
+	// , because eslint says that I do not use second value
+	const [ , updateShouldRenderTodos ] = rerenderTodos;
 
 	let pathName = props.location.pathname;
 
@@ -27,6 +31,7 @@ const AddTodoForm: React.FC<any> = (props: any) => {
 				`http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}&category=${category}`
 			)
 			.catch((err) => console.error(err));
+		updateShouldRenderTodos((shouldRenderTodos: Boolean) => !shouldRenderTodos);
 	};
 
 	const handleChange = (e) => {
