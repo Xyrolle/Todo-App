@@ -1,0 +1,15 @@
+.topbar {
+	background-color: #99b898;
+	overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topbar h1 {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 20px 16px;
+	margin-left: 20%;
+	text-decoration: none;
+	font-size: 2rem;
+}
