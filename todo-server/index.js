@@ -6,10 +6,6 @@ const app = express();
 
 app.use(cors());
 
-// table with todos, each todo has a primary key (id) and foreign key
-// each todo can be referenced from category
-// SELECT ALL Todos WHERE foreign_key=category_id
-
 let db = new sqlite3.Database('./todo.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
 	if (err) console.error(err.message);
 	else console.log('connected to database');
@@ -34,8 +30,9 @@ app.get('/add/todo', (req, res) => {
 app.get('/delete/todo/:id', (req, res) => {
 	const id = req.params.id;
 	const DELETE_TODO = `DELETE FROM Todos WHERE id=?`;
-	db.run(DELETE_TODO, id, (err) => {
+	db.run(DELETE_TODO, id, (err, rows) => {
 		if (err) console.error('error while deleting', err);
+		res.send(rows);
 	});
 });
 
@@ -46,7 +43,20 @@ app.get('/update/todo/:id', (req, res) => {
 // todos for category
 app.get('/todos/:category', (req, res) => {
 	const category = req.params.category;
-	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE category='${category}'`;
+	let { filterString, sort } = req.query;
+
+	let ORDER_BY;
+	if (sort === 'true') {
+		ORDER_BY = 'priority';
+	} else {
+		ORDER_BY = 'createdAt';
+	}
+
+	if (filterString === undefined) {
+		filterString = '';
+	}
+
+	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE (category='${category}' AND title LIKE '${filterString}%') ORDER BY ${ORDER_BY} DESC`;
 	db.all(SELECT_ALL_TODOS, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);
@@ -55,7 +65,22 @@ app.get('/todos/:category', (req, res) => {
 
 // all todos
 app.get('/todos/', (req, res) => {
-	const SELECT_ALL_TODOS = 'SELECT * FROM Todos';
+	// ?sort[priority]=asc&filter[priority]=1,2,3
+	let { filterString, sort } = req.query;
+
+	let ORDER_BY;
+	if (sort === 'true') {
+		ORDER_BY = 'priority';
+	} else {
+		ORDER_BY = 'createdAt';
+	}
+
+	if (filterString === undefined) {
+		filterString = '';
+	}
+
+	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE title LIKE '${filterString}%' ORDER BY ${ORDER_BY} DESC`;
+
 	db.all(SELECT_ALL_TODOS, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);
