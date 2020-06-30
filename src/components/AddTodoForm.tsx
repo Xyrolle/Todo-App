@@ -56,21 +56,21 @@ const AddTodoForm: React.FC<any> = (props: any) => {
 						type='radio'
 						id='low'
 						name='priority'
-						value='1'
-						checked={todo.priority === Priority.LOW}
+						value={1}
+						checked={Number(todo.priority) === Priority.LOW}
 						onChange={handleChange}
 					/>
 					<input
 						type='radio'
 						name='priority'
-						value='2'
+						value={2}
 						checked={Number(todo.priority) === Priority.MEDIUM}
 						onChange={handleChange}
 					/>
 					<input
 						type='radio'
 						name='priority'
-						value='3'
+						value={3}
 						checked={Number(todo.priority) === Priority.HIGH}
 						onChange={handleChange}
 					/>
