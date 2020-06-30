@@ -23,8 +23,16 @@ const Topbar: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 
 	return (
 		<div className='topbar'>
-			<input placeholder='search...' value={filterString} onChange={handleChange} />
-			<button onClick={handleSort}>Sort</button>
+			<input
+				type='text'
+				className='search'
+				placeholder='search...'
+				value={filterString}
+				onChange={handleChange}
+			/>
+			<button className='sort' onClick={handleSort}>
+				Sort
+			</button>
 			<h1>
 				{
 					name ? name :

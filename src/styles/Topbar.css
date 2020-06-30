@@ -13,3 +13,21 @@
 	text-decoration: none;
 	font-size: 2rem;
 }
+
+.topbar .search {
+	width: 20%;
+	margin: 1.2rem 2% auto auto;
+}
+
+.topbar .sort {
+	margin-right: 5%;
+	width: 5%;
+	height: 2.6rem;
+	border-radius: 3%;
+	border: none;
+	background-color: #f69e7b;
+}
+
+.topbar .sort:hover {
+	background-color: #c27f64;
+}

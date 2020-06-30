@@ -19,6 +19,7 @@ const AddTodoForm: React.FC<any> = (props: any) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
 		addTodo();
 	};
 
@@ -40,19 +41,39 @@ const AddTodoForm: React.FC<any> = (props: any) => {
 	};
 
 	return (
-		<div style={{ display: 'flex' }}>
+		<div>
 			<form onSubmit={handleSubmit}>
 				<label>title:</label>
 				<input type='text' name='title' value={todo.title} onChange={handleChange} />
 				<label>description:</label>
 				<input type='text' name='description' value={todo.description} onChange={handleChange} />
-				<div className='select-css'>
-					<label>priority:</label>
-					<select name='priority' onChange={handleChange}>
-						<option value='1'>Low</option>
-						<option value='2'>Medium</option>
-						<option value='3'>High</option>
-					</select>
+				<div className='buttons'>
+					<label>Low</label>
+					<label>Medium</label>
+					<label>High</label>
+					<span className='break' />
+					<input
+						type='radio'
+						id='low'
+						name='priority'
+						value='1'
+						checked={todo.priority === Priority.LOW}
+						onChange={handleChange}
+					/>
+					<input
+						type='radio'
+						name='priority'
+						value='2'
+						checked={Number(todo.priority) === Priority.MEDIUM}
+						onChange={handleChange}
+					/>
+					<input
+						type='radio'
+						name='priority'
+						value='3'
+						checked={Number(todo.priority) === Priority.HIGH}
+						onChange={handleChange}
+					/>
 				</div>
 				<input type='submit' className='button' value='Submit' />
 			</form>

@@ -104,24 +104,6 @@ app.get('/categories', (req, res) => {
 	});
 });
 
-app.get('/sort', (req, res) => {
-	const SORTED_TABLE =
-		'CREATE TABLE ORDERED_TODOS (id INTEGER PRIMARY KEY, title TEXT, description TEXT, createdAt TEXT, updatedAt TEXT, priority INTEGER, category TEXT)';
-	const INSERT_INTO_SORTED_TABLE = `INSERT INTO ORDERED_TODOS (id, title, description, createdAt, updatedAt, priority, category) SELECT id, title, description, createdAt, updatedAt, priority, category FROM Todos ORDER BY priority`;
-	const DROP_TODOS = 'DROP TABLE Todos';
-	const RENAME_TABLE = 'ALTER TABLE ORDERED_TODOS RENAME TO Todos';
-
-	db.run(SORTED_TABLE, (rows, err) => {
-		if (err) console.error(err);
-		else res.send('success');
-		db.run(INSERT_INTO_SORTED_TABLE, (rows, err) => {
-			db.run(DROP_TODOS, (rows, err) => {
-				db.run(RENAME_TABLE);
-			});
-		});
-	});
-});
-
 app.listen(4000, () => {
 	console.log('listening on port 4000');
 });
