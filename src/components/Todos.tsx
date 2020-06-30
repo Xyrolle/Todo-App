@@ -15,17 +15,19 @@ type CategoryProps = {
 
 const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 	const [ todos, updateTodos ] = useState<ITodo[]>([]);
-	const { rerenderTodos } = useContext(TodosContext);
+	const { rerenderTodos, filter, sort } = useContext(TodosContext);
 	const [ shouldRenderTodos ] = rerenderTodos;
+	const [ filterString ] = filter;
+	const [ sorted ] = sort;
 
 	useEffect(
 		() => {
 			const URL =
-				name ? `http://localhost:4000/todos/${name}` :
-				'http://localhost:4000/todos';
+				name ? `http://localhost:4000/todos/${name}?filterString=${filterString}&sort=${sorted}` :
+				`http://localhost:4000/todos/?filterString=${filterString}&sort=${sorted}`;
 			axios.get(URL).then((res) => updateTodos(res.data)).catch((err) => console.error(err));
 		},
-		[ name, shouldRenderTodos ]
+		[ filterString, name, shouldRenderTodos, sorted ]
 	);
 
 	return (

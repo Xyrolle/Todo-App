@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
 import { ITodo } from '../interfaces/ITodo';
+import { TodosContext } from '../context/TodosContext';
 
 import '../styles/Todo.css';
 
@@ -9,8 +10,11 @@ const todoPriorityStyles = { 1: 'low-priority', 2: 'medium-priority', 3: 'high-p
 
 const Todo: React.FC<ITodo> = (todo: ITodo) => {
 	const [ isEditable, setEditable ] = useState(false);
+	const { rerenderTodos } = useContext(TodosContext);
+	const [ , shouldRenderTodos ] = rerenderTodos;
 
 	const deleteTodo = () => {
+		shouldRenderTodos((shouldRenderTodos: Boolean) => !shouldRenderTodos);
 		axios.get(`http://localhost:4000/delete/todo/${todo.id}`).catch((err) => console.error(err));
 	};
 
@@ -22,7 +26,7 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 	return (
 		<div className={'todo ' + todoPriorityStyles[todo.priority]}>
 			<button className='delete-todo' onClick={deleteTodo}>
-				X
+				&times;
 			</button>
 			<div
 				className='todo-title'
