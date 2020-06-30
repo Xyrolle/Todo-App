@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+
+import { TodosContext } from '../context/TodosContext';
 
 const AddCategory: React.FC = () => {
 	const [ categoryName, updateCategoryName ] = useState('');
+	const { rerenderCategories } = useContext(TodosContext);
+	const [ , updateShouldRenderCategories ] = rerenderCategories;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		addCategory();
-		alert('submitefsdafd');
-		window.location.reload();
+		updateCategoryName('');
+		updateShouldRenderCategories((shouldRenderCategories: Boolean) => !shouldRenderCategories);
 	};
 
 	const addCategory = () => {
