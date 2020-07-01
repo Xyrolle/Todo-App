@@ -92,6 +92,19 @@ app.get('/add/category/', (req, res) => {
 	const ADD_CATEGORY = `INSERT INTO Categories (name) VALUES('${name}')`;
 	db.all(ADD_CATEGORY, (err, rows) => {
 		if (err) console.error('error while addding category', err);
+		res.send(rows);
+	});
+});
+
+app.get('/delete/category/:name', (req, res) => {
+	const name = req.params.name;
+	console.log(name);
+	const DELETE_CATEGORY = `DELETE FROM Categories WHERE name='${name}'`;
+	const DELETE_TODOS_FROM_CATEGORY = `DELETE FROM Todos WHERE category='${name}'`;
+	db.run(DELETE_CATEGORY);
+	db.run(DELETE_TODOS_FROM_CATEGORY, (err, rows) => {
+		if (err) console.error('error while deliting category');
+		res.send(rows);
 	});
 });
 

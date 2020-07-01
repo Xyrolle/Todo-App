@@ -25,7 +25,7 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 
 	return (
 		<div className={'todo ' + todoPriorityStyles[todo.priority]}>
-			<button className='delete-todo' onClick={deleteTodo}>
+			<button className='delete' onClick={deleteTodo}>
 				&times;
 			</button>
 			<div

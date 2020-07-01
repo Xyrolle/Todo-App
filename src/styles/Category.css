@@ -1,0 +1,11 @@
+#category {
+	float: left;
+	margin: 1rem 0.4rem auto 1rem;
+	z-index: 2;
+	position: relative;
+	font-size: 0.8rem;
+}
+
+div a h2 {
+	overflow: scroll;
+}
