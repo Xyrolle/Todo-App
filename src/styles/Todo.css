@@ -12,10 +12,11 @@
 	box-shadow: -4px 7px 13px 0px rgba(50, 50, 50, 0.75);
 	transition: all .2s ease-in-out;
 	overflow: scroll;
+	opacity: 0;
 }
 
 .todo:hover {
-	transform: scale(1.02);
+	transform: scale(1) !important;
 }
 
 .todo-title {
@@ -47,20 +48,26 @@
 	font-weight: 500;
 }
 
-.todo-date {
-	padding-bottom: 8px;
+.todos .high-priority {
+	background-color: #e0463b;
 }
 
-.high-priority {
-	background-color: #f44336;
-	opacity: 0.9;
+.todos .high-priority:hover {
+	background-color: #e7291b;
 }
 
 .medium-priority {
+	background-color: #e69216;
+}
+
+.medium-priority:hover {
 	background-color: #ff9800;
-	opacity: 0.9;
 }
 
 .low-priority {
 	background-color: #8bc34a;
+}
+
+.low-priority:hover {
+	background-color: #87cf35;
 }

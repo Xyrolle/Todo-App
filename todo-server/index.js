@@ -98,7 +98,6 @@ app.get('/add/category/', (req, res) => {
 
 app.get('/delete/category/:name', (req, res) => {
 	const name = req.params.name;
-	console.log(name);
 	const DELETE_CATEGORY = `DELETE FROM Categories WHERE name='${name}'`;
 	const DELETE_TODOS_FROM_CATEGORY = `DELETE FROM Todos WHERE category='${name}'`;
 	db.run(DELETE_CATEGORY);

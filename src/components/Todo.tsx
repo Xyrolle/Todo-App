@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { TweenMax, Power3 } from 'gsap';
 
 import { ITodo } from '../interfaces/ITodo';
 import { TodosContext } from '../context/TodosContext';
@@ -17,6 +18,15 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 		shouldRenderTodos((shouldRenderTodos: Boolean) => !shouldRenderTodos);
 		axios.get(`http://localhost:4000/delete/todo/${todo.id}`).catch((err) => console.error(err));
 	};
+
+	useEffect(() => {
+		TweenMax.to('.todo', 0.1, {
+			opacity: 1,
+			y: 20,
+			ease: Power3.easeOut,
+			stagger: 0.2
+		});
+	});
 
 	// const updateTodo = () => {
 	// 	// make new todo and place it instead of the old one
