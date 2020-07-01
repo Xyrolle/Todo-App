@@ -20,7 +20,7 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 	};
 
 	useEffect(() => {
-		TweenMax.to('.todo', 0.1, {
+		TweenMax.to('.todo', 0.05, {
 			opacity: 1,
 			y: 20,
 			ease: Power3.easeOut,

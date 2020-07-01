@@ -1,9 +1,23 @@
-#category {
-	float: left;
-	margin: 1rem 0.4rem auto 1rem;
+.delete-category {
+	float: right;
+	margin: 1rem 1.4rem auto auto;
 	z-index: 2;
 	position: relative;
 	font-size: 0.8rem;
+	border: none;
+	bacground-color: ##c1e8ce !important;
+	background-color: Transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	font-size: 1.6rem;
+	color: gray;
+}
+
+.delete-category:hover {
+	color: red;
 }
 
 div a h2 {

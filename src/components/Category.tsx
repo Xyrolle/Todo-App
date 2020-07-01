@@ -26,7 +26,7 @@ const Category: React.FC<CategoryProps> = ({ name, id }: CategoryProps) => {
 
 	return (
 		<div>
-			<button id='category' className='delete' onClick={deleteCategory}>
+			<button className='delete-category' onClick={deleteCategory}>
 				&times;
 			</button>
 			<Link to={`/${name}`}>
