@@ -1,6 +1,6 @@
 export interface ITodo {
 	title: string;
-	description?: string;
+	description: string;
 	readonly createdAt?: Date;
 	updatedAt?: Date;
 	priority: Priority;

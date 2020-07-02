@@ -20,10 +20,12 @@
 }
 
 .todo-title {
-	padding-top: 5%;
+	padding-top: 3%;
 	font-size: 2rem;
 	font-weight: 600;
 	width: 100%;
+	height: 2.6rem;
+	border: 1px solid rgba(255, 244, 255, 0.4);
 }
 
 .delete {
@@ -46,6 +48,8 @@
 .todo-description {
 	padding: 5%;
 	font-weight: 500;
+	min-width: 100px;
+	min-height: 20px;
 }
 
 .todos .high-priority {

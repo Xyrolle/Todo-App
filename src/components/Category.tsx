@@ -3,13 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { TodosContext } from '../context/TodosContext';
+import { CategoryProps } from '../types/CategoryProps';
 
 import '../styles/Category.css';
-
-type CategoryProps = {
-	name: string;
-	id: number;
-};
 
 const Category: React.FC<CategoryProps> = ({ name, id }: CategoryProps) => {
 	const { rerenderCategories, rerenderTodos } = useContext(TodosContext);

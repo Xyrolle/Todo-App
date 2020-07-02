@@ -36,8 +36,24 @@ app.get('/delete/todo/:id', (req, res) => {
 	});
 });
 
-app.get('/update/todo/:id', (req, res) => {
+app.get('/update/todoTitle/:id', (req, res) => {
 	const id = req.params.id;
+	const { title } = req.query;
+	const UPDATE_TITLE = `UPDATE Todos SET title='${title}', updatedAt='${new Date()}' WHERE id='${id}'`;
+	db.run(UPDATE_TITLE, (err, rows) => {
+		if (err) console.error(err);
+		res.send(rows);
+	});
+});
+
+app.get('/update/todoDescription/:id', (req, res) => {
+	const id = req.params.id;
+	const { description } = req.query;
+	const UPDATE_TITLE = `UPDATE Todos SET description='${description}', updatedAt='${new Date()}' WHERE id='${id}'`;
+	db.run(UPDATE_TITLE, (err, rows) => {
+		if (err) console.error(err);
+		res.send(rows);
+	});
 });
 
 // todos for category
@@ -65,7 +81,6 @@ app.get('/todos/:category', (req, res) => {
 
 // all todos
 app.get('/todos/', (req, res) => {
-	// ?sort[priority]=asc&filter[priority]=1,2,3
 	let { filterString, sort } = req.query;
 
 	let ORDER_BY;
