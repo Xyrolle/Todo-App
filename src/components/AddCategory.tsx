@@ -8,7 +8,7 @@ const AddCategory: React.FC = () => {
 	const { rerenderCategories } = useContext(TodosContext);
 	const [ , updateShouldRenderCategories ] = rerenderCategories;
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: any) => {
 		e.preventDefault();
 		addCategory();
 		updateCategoryName('');

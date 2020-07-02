@@ -56,6 +56,16 @@ app.get('/update/todoDescription/:id', (req, res) => {
 	});
 });
 
+app.get('/update/todoPriority/:id', (req, res) => {
+	const id = req.params.id;
+	const { priority } = req.query;
+	const UPDATE_TITLE = `UPDATE Todos SET priorityƒ='${priority}', updatedAt='${new Date()}' WHERE id='${id}'`;
+	db.run(UPDATE_TITLE, (err, rows) => {
+		if (err) console.error(err);
+		res.send(rows);
+	});
+});
+
 // todos for category
 app.get('/todos/:category', (req, res) => {
 	const category = req.params.category;

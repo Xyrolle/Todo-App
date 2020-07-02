@@ -31,6 +31,14 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 			.catch((err) => console.error(err));
 	};
 
+	const updatePriority = (e: any) => {
+		console.log(todo.priority + 1);
+		axios
+			.get(`http://localhost:4000/update/todoPriority/${todo.id}?priority=${todo.priority % 3 + 1}`)
+			.catch((err) => console.error(err));
+		shouldRenderTodos((should) => !should);
+	};
+
 	useEffect(() => {
 		TweenMax.to('.todo', 0.05, {
 			opacity: 1,
@@ -52,7 +60,7 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 				className='todo-description'
 				onChange={updateDescription}
 			/>
-			<div>
+			<div className='date'>
 				Created At:{' '}
 				{
 					todo.createdAt ? <span className='todo-date'>
@@ -67,6 +75,9 @@ const Todo: React.FC<ITodo> = (todo: ITodo) => {
 					</span> :
 					null}
 			</div>
+			<span className='priority' onClick={updatePriority}>
+				Priority: {todo.priority}{' '}
+			</span>
 		</div>
 	);
 };
