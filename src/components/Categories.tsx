@@ -26,7 +26,7 @@ const Categories: React.FC = () => {
 		<Fragment>
 			{categories.length &&
 				categories.map((category: ICategory) => {
-					return <Category name={category.name} id={category.id} key={uuid_v4()} />;
+					return <Category name={category.name} key={uuid_v4()} />;
 				})}
 		</Fragment>
 	);

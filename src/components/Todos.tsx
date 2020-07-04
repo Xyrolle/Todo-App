@@ -1,39 +1,45 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { v4 as uuid_v4 } from 'uuid';
-import axios from 'axios';
 
 import Todo from './Todo';
 
 import { ITodo } from '../interfaces/ITodo';
 import { TodosContext } from '../context/TodosContext';
+import { CategoryProps } from '../types/CategoryProps';
 
 import '../styles/Todos.css';
-
-type CategoryProps = {
-	name: string;
-};
+import { Fetch } from '../utils/Fetch';
 
 const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
-	const [ todos, updateTodos ] = useState<ITodo[]>([]);
-	const { rerenderTodos, filter, sort } = useContext(TodosContext);
+	const { todosState, rerenderTodos, filter, sort } = useContext(TodosContext);
+	const [ todos, updateTodos ] = todosState;
 	const [ shouldRenderTodos ] = rerenderTodos;
+
 	const [ filterString ] = filter;
 	const [ sorted ] = sort;
 
 	useEffect(
 		() => {
 			const URL =
-				name ? `http://localhost:4000/todos/${name}?filterString=${filterString}&sort=${sorted}` :
-				`http://localhost:4000/todos/?filterString=${filterString}&sort=${sorted}`;
-			axios.get(URL).then((res) => updateTodos(res.data)).catch((err) => console.error(err));
+				name ? `http://localhost:4000/todos/${name}` :
+				`http://localhost:4000/todos/`;
+			Fetch(URL, (res: any) => updateTodos(res.data));
 		},
-		[ filterString, name, shouldRenderTodos, sorted ]
+		[ name, updateTodos, shouldRenderTodos ]
 	);
+
+	let filteredTodos = todos.filter(
+		(todo: ITodo) => todo.title.toLowerCase().indexOf(filterString.toLowerCase()) > -1
+	);
+
+	if (sorted) {
+		filteredTodos.sort((a: ITodo, b: ITodo) => b.priority - a.priority);
+	}
 
 	return (
 		<div className='todos'>
-			{todos.length &&
-				todos.map((todo: ITodo) => {
+			{filteredTodos.length &&
+				filteredTodos.map((todo: ITodo) => {
 					return (
 						<Todo
 							title={todo.title}

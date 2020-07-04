@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
 
 import { TodosContext } from '../context/TodosContext';
+import { CategoryProps } from '../types/CategoryProps';
 
 import '../styles/Topbar.css';
-
-type CategoryProps = {
-	name: string;
-};
 
 const Topbar: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 	const { filter, sort } = useContext(TodosContext);

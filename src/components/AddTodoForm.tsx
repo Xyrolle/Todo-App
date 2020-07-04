@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router';
-import axios from 'axios';
 import { TodosContext } from '../context/TodosContext';
 
 import { ITodo, Priority } from '../interfaces/ITodo';
 
 import '../styles/AddTodoForm.css';
+import { Fetch } from '../utils/Fetch';
 
 const initialState: ITodo = { title: '', description: '', priority: Priority.LOW };
 
@@ -17,25 +17,22 @@ const AddTodoForm: React.FC<any> = (props: any) => {
 
 	let pathName = props.location.pathname;
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: any) => {
 		e.preventDefault();
-
 		addTodo();
+		updateTodo(initialState);
 	};
 
 	const addTodo = () => {
 		let category = pathName.substring(1);
 		const { title, description, priority } = todo;
-		updateTodo(initialState);
-		axios
-			.get(
-				`http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}&category=${category}`
-			)
-			.catch((err) => console.error(err));
-		updateShouldRenderTodos((shouldRenderTodos: Boolean) => !shouldRenderTodos);
+		const URL = `http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}&category=${category}`;
+		Fetch(URL, () => {
+			updateShouldRenderTodos((shouldRenderTodos: Boolean) => !shouldRenderTodos);
+		});
 	};
 
-	const handleChange = (e) => {
+	const handleChange = (e: any) => {
 		const { name, value } = e.target;
 		updateTodo({ ...todo, [name]: value });
 	};

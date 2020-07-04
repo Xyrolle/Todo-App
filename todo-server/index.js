@@ -59,7 +59,7 @@ app.get('/update/todoDescription/:id', (req, res) => {
 app.get('/update/todoPriority/:id', (req, res) => {
 	const id = req.params.id;
 	const { priority } = req.query;
-	const UPDATE_TITLE = `UPDATE Todos SET priorityƒ='${priority}', updatedAt='${new Date()}' WHERE id='${id}'`;
+	const UPDATE_TITLE = `UPDATE Todos SET priority='${priority}', updatedAt='${new Date()}' WHERE id='${id}'`;
 	db.run(UPDATE_TITLE, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);
@@ -69,20 +69,8 @@ app.get('/update/todoPriority/:id', (req, res) => {
 // todos for category
 app.get('/todos/:category', (req, res) => {
 	const category = req.params.category;
-	let { filterString, sort } = req.query;
 
-	let ORDER_BY;
-	if (sort === 'true') {
-		ORDER_BY = 'priority';
-	} else {
-		ORDER_BY = 'createdAt';
-	}
-
-	if (filterString === undefined) {
-		filterString = '';
-	}
-
-	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE (category='${category}' AND title LIKE '${filterString}%') ORDER BY ${ORDER_BY} DESC`;
+	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE category='${category}'`;
 	db.all(SELECT_ALL_TODOS, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);
@@ -91,20 +79,7 @@ app.get('/todos/:category', (req, res) => {
 
 // all todos
 app.get('/todos/', (req, res) => {
-	let { filterString, sort } = req.query;
-
-	let ORDER_BY;
-	if (sort === 'true') {
-		ORDER_BY = 'priority';
-	} else {
-		ORDER_BY = 'createdAt';
-	}
-
-	if (filterString === undefined) {
-		filterString = '';
-	}
-
-	const SELECT_ALL_TODOS = `SELECT * FROM Todos WHERE title LIKE '${filterString}%' ORDER BY ${ORDER_BY} DESC`;
+	const SELECT_ALL_TODOS = `SELECT * FROM Todos`;
 
 	db.all(SELECT_ALL_TODOS, (err, rows) => {
 		if (err) console.error(err);

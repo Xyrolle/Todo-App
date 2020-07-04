@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
+
+import { Fetch } from '../utils/Fetch';
 
 import { TodosContext } from '../context/TodosContext';
 
 const AddCategory: React.FC = () => {
-	const [ categoryName, updateCategoryName ] = useState('');
+	const [ categoryName, updateCategoryName ] = useState<string>('');
 	const { rerenderCategories } = useContext(TodosContext);
 	const [ , updateShouldRenderCategories ] = rerenderCategories;
 
@@ -12,14 +13,16 @@ const AddCategory: React.FC = () => {
 		e.preventDefault();
 		addCategory();
 		updateCategoryName('');
-		updateShouldRenderCategories((shouldRenderCategories: Boolean) => !shouldRenderCategories);
 	};
 
 	const addCategory = () => {
-		axios.get(`http://localhost:4000/add/category?name=${categoryName}`).catch((err) => console.error(err));
+		const URL = `http://localhost:4000/add/category?name=${categoryName}`;
+		Fetch(URL, () => {
+			updateShouldRenderCategories((shouldRenderCategories: Boolean) => !shouldRenderCategories);
+		});
 	};
 
-	const handleChange = (e) => {
+	const handleChange = (e: any) => {
 		const { value } = e.target;
 		updateCategoryName(value);
 	};

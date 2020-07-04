@@ -1,23 +1,23 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import { TodosContext } from '../context/TodosContext';
 import { CategoryProps } from '../types/CategoryProps';
 
 import '../styles/Category.css';
+import { Fetch } from '../utils/Fetch';
 
-const Category: React.FC<CategoryProps> = ({ name, id }: CategoryProps) => {
+const Category: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 	const { rerenderCategories, rerenderTodos } = useContext(TodosContext);
 	const [ , shouldRenderTodos ] = rerenderTodos;
 	const [ , shouldRenderCategories ] = rerenderCategories;
 
 	const deleteCategory = () => {
-		axios
-			.get(`http://localhost:4000/delete/category/${name}`)
-			.catch((err) => console.error('error while deleting category', err));
-		shouldRenderCategories((should: Boolean) => !should);
-		shouldRenderTodos((should: Boolean) => !should);
+		const URL = `http://localhost:4000/delete/category/${name}`;
+		Fetch(URL, (res: any) => {
+			shouldRenderCategories((should: Boolean) => !should);
+			shouldRenderTodos((should: Boolean) => !should);
+		});
 	};
 
 	return (

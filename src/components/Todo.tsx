@@ -1,52 +1,49 @@
 import React, { useContext, useEffect } from 'react';
-import axios from 'axios';
-import { TweenMax, Power3 } from 'gsap';
 import ContentEditable from 'react-contenteditable';
 
 import { ITodo } from '../interfaces/ITodo';
 import { TodosContext } from '../context/TodosContext';
+import { animateTodo } from '../utils/AnimateTodo';
 
 import '../styles/Todo.css';
+import { Fetch } from '../utils/Fetch';
 
 const todoPriorityStyles = { 1: 'low-priority', 2: 'medium-priority', 3: 'high-priority' };
 
 const Todo: React.FC<ITodo> = (todo: ITodo) => {
-	const { rerenderTodos } = useContext(TodosContext);
-	const [ , shouldRenderTodos ] = rerenderTodos;
+	const { todosState } = useContext(TodosContext);
+	const [ todos, updateTodos ] = todosState;
+
+	useEffect(() => {
+		animateTodo();
+	}, []);
 
 	const deleteTodo = () => {
-		shouldRenderTodos((shouldRenderTodos: Boolean) => !shouldRenderTodos);
-		axios.get(`http://localhost:4000/delete/todo/${todo.id}`).catch((err) => console.error(err));
+		updateTodos(todos.filter((currentTodo: ITodo) => currentTodo.id !== todo.id));
+		const URL = `http://localhost:4000/delete/todo/${todo.id}`;
+		Fetch(URL);
 	};
 
 	const updateTitle = (e: any) => {
-		axios
-			.get(`http://localhost:4000/update/todoTitle/${todo.id}?title=${e.target.value}`)
-			.catch((err) => console.error(err));
+		const URL = `http://localhost:4000/update/todoTitle/${todo.id}?title=${e.target.value}`;
+		Fetch(URL);
 	};
 
 	const updateDescription = (e: any) => {
-		axios
-			.get(`http://localhost:4000/update/todoDescription/${todo.id}?description=${e.target.value}`)
-			.catch((err) => console.error(err));
+		const URL = `http://localhost:4000/update/todoDescription/${todo.id}?description=${e.target.value}`;
+		Fetch(URL);
 	};
 
 	const updatePriority = (e: any) => {
-		console.log(todo.priority + 1);
-		axios
-			.get(`http://localhost:4000/update/todoPriority/${todo.id}?priority=${todo.priority % 3 + 1}`)
-			.catch((err) => console.error(err));
-		shouldRenderTodos((should) => !should);
-	};
-
-	useEffect(() => {
-		TweenMax.to('.todo', 0.05, {
-			opacity: 1,
-			y: 20,
-			ease: Power3.easeOut,
-			stagger: 0.2
+		const newPriority = todo.priority % 3 + 1;
+		const URL = `http://localhost:4000/update/todoPriority/${todo.id}?priority=${newPriority}`;
+		Fetch(URL);
+		let updatedTodos: ITodo[] = todos.map((currentTodo: ITodo) => {
+			if (currentTodo.id === todo.id) currentTodo.priority = newPriority;
+			return currentTodo;
 		});
-	});
+		updateTodos(updatedTodos);
+	};
 
 	return (
 		<div className={'todo ' + todoPriorityStyles[todo.priority]}>
