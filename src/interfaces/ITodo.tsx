@@ -5,7 +5,7 @@ export interface ITodo {
 	updatedAt?: Date;
 	priority: Priority;
 	readonly id?: number;
-	complete?: boolean;
+	readonly category?: string;
 }
 
 export enum Priority {

@@ -6,22 +6,24 @@ import { CategoryProps } from '../types/CategoryProps';
 
 import '../styles/Category.css';
 import { Fetch } from '../utils/Fetch';
+import { ITodo } from '../interfaces/ITodo';
+import { ICategory } from '../interfaces/ICategory';
 
 const Category: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
-	const { rerenderCategories, rerenderTodos } = useContext(TodosContext);
-	const [ , shouldRenderTodos ] = rerenderTodos;
-	const [ , shouldRenderCategories ] = rerenderCategories;
+	const { todosState, categoriesState } = useContext(TodosContext);
+	const [ todos, updateTodos ] = todosState;
+	const [ categories, updateCategories ] = categoriesState;
 
 	const deleteCategory = () => {
 		const URL = `http://localhost:4000/delete/category/${name}`;
-		Fetch(URL, (res: any) => {
-			shouldRenderCategories((should: Boolean) => !should);
-			shouldRenderTodos((should: Boolean) => !should);
-		});
+		Fetch(URL);
+		updateTodos(todos.filter((todo: ITodo) => todo.category !== name));
+		updateCategories(categories.filter((category: ICategory) => category.name !== name));
 	};
 
 	return (
 		<div>
+			{console.log(todos)}
 			<button className='delete-category' onClick={deleteCategory}>
 				&times;
 			</button>

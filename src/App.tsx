@@ -17,14 +17,14 @@ const App: React.FC = () => {
 				<Router>
 					<Route
 						path='/:categoryName'
-						render={(props) => <Topbar name={props.match.params.categoryName} />}
+						render={(props: any) => <Topbar name={props.match.params.categoryName} />}
 					/>
 					<Route path='/' exact component={Topbar} />
 					<Route exact path='/' component={Todos} />
 					<Route
 						exact
 						path='/:categoryName'
-						render={(props) => <Todos name={props.match.params.categoryName} />}
+						render={(props: any) => <Todos name={props.match.params.categoryName} />}
 					/>
 					<Sidebar />
 					<Modal />

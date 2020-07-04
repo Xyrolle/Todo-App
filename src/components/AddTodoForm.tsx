@@ -11,9 +11,9 @@ const initialState: ITodo = { title: '', description: '', priority: Priority.LOW
 
 const AddTodoForm: React.FC<any> = (props: any) => {
 	const [ todo, updateTodo ] = useState<ITodo>(initialState);
-	const { rerenderTodos } = useContext(TodosContext);
+	const { todosState } = useContext(TodosContext);
 	// , because eslint says that I do not use second value
-	const [ , updateShouldRenderTodos ] = rerenderTodos;
+	const [ todos, updateTodos ] = todosState;
 
 	let pathName = props.location.pathname;
 
@@ -24,12 +24,14 @@ const AddTodoForm: React.FC<any> = (props: any) => {
 	};
 
 	const addTodo = () => {
-		let category = pathName.substring(1);
+		let categoryName = pathName.substring(1);
 		const { title, description, priority } = todo;
-		const URL = `http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}&category=${category}`;
-		Fetch(URL, () => {
-			updateShouldRenderTodos((shouldRenderTodos: Boolean) => !shouldRenderTodos);
-		});
+		const URL = `http://localhost:4000/add/todo?title=${title}&description=${description}&priority=${priority}&category=${categoryName}`;
+
+		// get latest id instead of fetching all todos
+		// id is needed to perform deletion
+		const GET_LATEST_TODO_ID = 'http://localhost:4000/latest/Todos';
+		Fetch(URL, () => Fetch(GET_LATEST_TODO_ID, (res: any) => updateTodos([ ...todos, ...res.data ])));
 	};
 
 	const handleChange = (e: any) => {

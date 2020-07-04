@@ -1,25 +1,22 @@
-import React, { useState, useEffect, Fragment, useContext } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
 import { v4 as uuid_v4 } from 'uuid';
-import axios from 'axios';
 
 import Category from './Category';
 
-import ICategory from '../interfaces/ICategory';
+import { ICategory } from '../interfaces/ICategory';
 import { TodosContext } from '../context/TodosContext';
+import { Fetch } from '../utils/Fetch';
 
 const Categories: React.FC = () => {
-	const [ categories, updateCategories ] = useState<ICategory[]>([]);
-	const { rerenderCategories } = useContext(TodosContext);
-	const [ shouldRenderCategories ] = rerenderCategories;
+	const { categoriesState } = useContext(TodosContext);
+	const [ categories, updateCategories ] = categoriesState;
 
 	useEffect(
 		() => {
-			axios
-				.get('http://localhost:4000/categories')
-				.then((res) => updateCategories(res.data))
-				.catch((err) => console.error(err));
+			const URL = 'http://localhost:4000/categories';
+			Fetch(URL, (res: any) => updateCategories(res.data));
 		},
-		[ shouldRenderCategories ]
+		[ updateCategories ]
 	);
 
 	return (

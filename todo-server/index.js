@@ -20,9 +20,14 @@ app.get('/add/todo', (req, res) => {
 	const { title, description, priority, category } = req.query;
 	const date = new Date();
 	const ADD_TODO = `INSERT INTO Todos (title, description, createdAt, updatedAt, priority, category) VALUES('${title}', '${description}', '${date}', '${date}', '${priority}', '${category}')`;
-	db.all(ADD_TODO, (err, rows) => {
+	const CHECK_IF_CATEGORY_EXIST = `SELECT * FROM Categories WHERE name='${category}'`;
+	db.all(CHECK_IF_CATEGORY_EXIST, (err, rows) => {
 		if (err) console.error(err);
-		res.send(rows);
+		if (rows.length === 0) return;
+		db.all(ADD_TODO, (err, rows) => {
+			if (err) console.error(err);
+			res.send(rows);
+		});
 	});
 });
 
@@ -80,8 +85,17 @@ app.get('/todos/:category', (req, res) => {
 // all todos
 app.get('/todos/', (req, res) => {
 	const SELECT_ALL_TODOS = `SELECT * FROM Todos`;
-
 	db.all(SELECT_ALL_TODOS, (err, rows) => {
+		if (err) console.error(err);
+		res.send(rows);
+	});
+});
+
+// get id for last added item
+app.get('/latest/:tableName', (req, res) => {
+	const tableName = req.params.tableName;
+	const SELECT_LAST = `SELECT * FROM ${tableName} ORDER BY id DESC LIMIT 1`;
+	db.all(SELECT_LAST, (err, rows) => {
 		if (err) console.error(err);
 		res.send(rows);
 	});

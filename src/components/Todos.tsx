@@ -11,10 +11,8 @@ import '../styles/Todos.css';
 import { Fetch } from '../utils/Fetch';
 
 const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
-	const { todosState, rerenderTodos, filter, sort } = useContext(TodosContext);
+	const { todosState, filter, sort } = useContext(TodosContext);
 	const [ todos, updateTodos ] = todosState;
-	const [ shouldRenderTodos ] = rerenderTodos;
-
 	const [ filterString ] = filter;
 	const [ sorted ] = sort;
 
@@ -25,7 +23,7 @@ const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 				`http://localhost:4000/todos/`;
 			Fetch(URL, (res: any) => updateTodos(res.data));
 		},
-		[ name, updateTodos, shouldRenderTodos ]
+		[ name, updateTodos ]
 	);
 
 	let filteredTodos = todos.filter(
@@ -48,7 +46,6 @@ const Todos: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
 							id={todo.id}
 							createdAt={todo.createdAt}
 							updatedAt={todo.updatedAt}
-							complete={todo.complete}
 							key={uuid_v4()}
 						/>
 					);

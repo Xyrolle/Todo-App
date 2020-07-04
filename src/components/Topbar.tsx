@@ -5,7 +5,7 @@ import { CategoryProps } from '../types/CategoryProps';
 
 import '../styles/Topbar.css';
 
-const Topbar: React.FC<CategoryProps> = ({ name }: CategoryProps) => {
+const Topbar: React.FC<CategoryProps> = ({ name, id }: CategoryProps) => {
 	const { filter, sort } = useContext(TodosContext);
 	const [ filterString, updateFilterString ] = filter;
 	const [ , updateSorted ] = sort;
